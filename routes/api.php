@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Postcontroller;
+use App\Http\Controllers\Autenticationcontroller;
+use Laravel\Sanctum\Sanctum;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +18,16 @@ use App\Http\Controllers\Postcontroller;
 |
 */
 
-route::get('/post', [Postcontroller::class ,'index']);
-route::get('/post/{id}' , [Postcontroller::class, 'show']);
+route::middleware(['auth:sanctum'])->group(function(){
+    route::get('/post', [PostController::class ,'index']);
+    route::get('/post/{id}', [PostController::class ,'show']);
+    route::post('/post',[PostController::class , 'store']);
+    route::get('/logout',[Autenticationcontroller::class, 'logout']);
+    route::patch('/post/{id}',[Postcontroller::class, 'update']);
+    route::get('/me',[Autenticationcontroller::class, 'me']);
+});
+route::post('/login',[Autenticationcontroller::class, 'login']);
+
+
 
 ?>
