@@ -43,7 +43,7 @@ class Postcontroller extends Controller
             'title' => 'required|max:255',
             'news_content' => 'required',
         ]);
-        // return response()->json('Sudah Dapat Digunakan');
+        return response()->json('Sudah Dapat Digunakan');
         
     }
 }

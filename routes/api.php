@@ -23,7 +23,7 @@ route::middleware(['auth:sanctum'])->group(function(){
     route::get('/post/{id}', [PostController::class ,'show']);
     route::post('/post',[PostController::class , 'store']);
     route::get('/logout',[Autenticationcontroller::class, 'logout']);
-    route::patch('/post/{id}',[Postcontroller::class, 'update']);
+    route::patch('/post/{id}',[Postcontroller::class, 'update'])->middleware(['post.owner']);
     route::get('/me',[Autenticationcontroller::class, 'me']);
 });
 route::post('/login',[Autenticationcontroller::class, 'login']);
