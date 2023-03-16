@@ -43,8 +43,20 @@ class Postcontroller extends Controller
             'title' => 'required|max:255',
             'news_content' => 'required',
         ]);
-        return response()->json('Sudah Dapat Digunakan');
-        
+        // return response()->json('Sudah Dapat Digunakan');
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+
+        // return response()->json('sudah dapat digunakan');
+        return new DetailPostResource($post->loadMissing('writer:id,username'));
+    }
+    public function delete($id){
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return response()->json([
+            'message' => "data successfully deleted"
+        ]);
     }
 }
 ?>
