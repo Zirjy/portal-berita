@@ -8,9 +8,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use PharIo\Manifest\Author;
 
-use function GuzzleHttp\Promise\all;
 
 
 class Postcontroller extends Controller
@@ -18,8 +16,10 @@ class Postcontroller extends Controller
     public function index(){
         $post = Post::all();
         // return response()->json(['data' => $post]);
-        return Postresource::collection($post);
+        // return Postresource::collection($post);
+        return DetailPostResource::collection($post->loadMissing('writer:id,username', "comments:id,post_id,user_id,comments_content"));
     }
+
 
     public function show($id){
         $post = Post::with('writer:id,username')->findOrFail($id);

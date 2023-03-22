@@ -21,7 +21,7 @@ class DetailPostResource extends JsonResource
             'author' => $this->author,
             'image' => $this->image,
             'writer' => $this->whenLoaded('writer'),
-            'commentator' => $this->whenLoaded('comments', function(){
+            'comments' => $this->whenLoaded('comments', function(){
                 return collect($this->comments)->each(function($comment){
                     $comment->commentator;
                     return $comment;
